@@ -34,7 +34,7 @@ function formatResult(videoData, source = "rapidapi") {
     return {
       creator: "Corex",
       status: true,
-      music: videoData.music?.play_url || null,
+      music: videoData.music || null,
       video: videoData.play || null,
       no_watermark: videoData.play || null,
       author: videoData.author?.unique_id || null,
@@ -56,7 +56,7 @@ function formatResult(videoData, source = "rapidapi") {
 app.get("/api/download", async (req, res) => {
   const { url } = req.query;
   if (!url) {
-    return res.status(400).json({ error: "TikTok URL is required" });
+    return res.status(400).json({ error: "TikTok URL required" });
   }
 
   try {
@@ -92,7 +92,7 @@ app.get("/api/download", async (req, res) => {
 
     return res
       .status(500)
-      .json({ error: "Failed to fetch TikTok video from both APIs" });
+      .json({ error: "Failed to fetch TikTok Video" });
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Server error" });
